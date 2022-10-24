@@ -1,7 +1,6 @@
 const http = require("http");
 const fs = require("fs");
 let requests = require("requests");
-const port = process.env.PORT || 8000;
 const { on } = require("events");
 
 let file = fs.readFileSync("home.html", "utf-8");
@@ -17,8 +16,9 @@ const replaceVal = (tempVal , orgVal) => {
     return finalData;
 }
 const server = http.createServer((req, res) => {
-    if (req.url = "") {
-        requests("https://api.openweathermap.org/data/2.5/weather?lat=43.2560802&lon=-79.8728583&appid=ecc495e8624fe81b02df2aec960701d5")
+    if (req.url = "/") {
+        let api1 = requests("http://api.openweathermap.org/geo/1.0/direct?q=Hamilton&appid=ecc495e8624fe81b02df2aec960701d5")
+        let api2 = requests("https://api.openweathermap.org/data/2.5/weather?lat=43.2560802&lon=-79.8728583&appid=ecc495e8624fe81b02df2aec960701d5")
         .on('data' , (chunk) => {
             let objData = JSON.parse(chunk)
             let arrData = [objData]
@@ -34,6 +34,6 @@ const server = http.createServer((req, res) => {
         
     }
 });
-server.listen(port , () => {
+server.listen(8000, '127.0.0.1', () => {
     console.log("listening");
 });
