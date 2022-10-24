@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .weathericon{
+            color: #FF8B00;
+        }
+        .box{
+            max-width: 20vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            margin-top: 120px;
+            background-color: #87B1C0;
+            border-radius: 10px;
+        }
+        .innerbox{
+            border-radius: 10px 10px 0 0;
+            background-color: #B8E7F6;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .innerbox i {
+            font-size: 4rem;
+            padding: 20px 60px;
+        }
+        .innerbox h2{
+            font-weight: 400;
+            font-size: 1rem;
+        }
+        p , h1 , h2 , h3 , .info i{
+            text-align: center;
+            color: #fff;
+            padding: 10px 0;
+        }
+        h3 , h2{
+            font-size: 1rem;
+            font-weight: 100;
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="innerbox">
+
+        <div class="weathericon">no icon </div>
+            <h1 class="iconDesc">{%icondesc%}</h1>
+        
+</div>
+        <div class="info">
+            <h2 class="location"><i class="fa-solid fa-street-view"></i> {%city%} , {%country%}</h2>
+            <h1 id="time"></h1> 
+            <p id="date"></p>
+            <h1 class="temp">{%temprature%}&deg C</h1>
+            <h3 class="tempminmax">MIN = {%minTemp%}&deg C , MAX = {%maxTemp%}&deg C</h3>
+        </div>
+    </div>
+<script>
+    let date = document.querySelector('.temp');
+    let weathericon = document.querySelector('.weathericon');
+    let weatherCondition = "{%weather%}";
+    let iconDesc = document.querySelector('.iconDesc')
+    if(weatherCondition == "Sunny"){
+        weathericon.innerHTML = '<i class="fa-solid fa-sun"></i>'
+        iconDesc.style.color = "#FF8B00";
+    }else if(weatherCondition == "Clouds"){
+        weathericon.innerHTML = '<i class="fa-solid fa-cloud"></i>';
+        weathericon.style.color = "#566064";
+        iconDesc.style.color = "#566064";
+    }else if(weatherCondition == "Rain"){
+        weathericon.innerHTML = '<i class="fa-solid fa-cloud-rain"></i>';
+        weathericon.style.color = "#566064";
+        iconDesc.style.color = "#566064";
+    }
+    let time = new Date();
+    const curDay = () => {
+        let weekDays = new Array();
+        let months = [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sept",
+            "Oct",
+            "Nov",
+            "Dec"
+        ];
+        let day = time.getUTCDate();
+        let month = time.getMonth();
+        let year = time.getFullYear();
+        let htmlDate = document.querySelector('#date');
+        weekDays[0] ="Sunday";
+        weekDays[1] ="Monday";
+        weekDays[2] ="Tuesday";
+        weekDays[3] ="Wednesday";
+        weekDays[4] ="Thursday";
+        weekDays[5] ="Friday";
+        weekDays[6] ="Saturday";
+        let weekday = new Date();
+        htmlDate.innerHTML = `${weekDays[weekday.getDay(weekDays)]} | 
+        ${ months[month]}  ${day}`;
+    }
+    curDay();
+
+    function curTime(){
+        let time = new Date();
+        let htmltime = document.querySelector('#time');
+        let hour = time.getHours();
+        let minutes = time.getMinutes();
+        let seconds = time.getSeconds();
+        minutes = checkTime(minutes);
+        seconds = checkTime(seconds);
+        htmltime.innerHTML = `${hour}:${minutes}:${seconds}`;
+        setTimeout(curTime , 1000);
+    }
+    curTime();
+
+function checkTime(i) {
+  if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+  return i;
+}
+    
+</script>
+</body>
+
+</html>
